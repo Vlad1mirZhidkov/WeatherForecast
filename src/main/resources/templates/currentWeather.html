@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <a href="/" class="btn btn-primary">Back</a>
+    <h1>Location: <span th:text="${location}"></span></h1>
+    <h2>Current Weather:</h2>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<p>Temperature: <span th:text="${currentTime.getTemp()}"></span></p>
+<p>Feels like: <span th:text="${currentTime.getFeelsLike()}"></span></p>
+<p>Humidity: <span th:text="${currentTime.getHumidity()}"></span></p>
+<p>Precipitation: <span th:text="${currentTime.getPrecipType() != null ? currentTime.getPrecipType() : 'No'}"></span></p>    <p>Speed of wind: <span th:text="${currentTime.getWindspeed()}"></span></p>
+<p>Direction of wind: <span th:text="${currentTime.getWinddir()}"></span></p>
+<p>Solar radiation: <span th:text="${currentTime.getSolarradiation()}"></span></p>
+<a th:href="@{/forecast(location=${location})}" class="btn btn-primary">Get 15 Days Forecast</a>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

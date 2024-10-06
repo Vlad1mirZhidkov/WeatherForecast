@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast</title>
+    <a href="/" class="btn btn-primary">Back</a>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Weather Forecast</h1>
+    <ul class="nav nav-tabs">
+        <li th:each="day, iterStat : ${days}" class="nav-item">
+            <a class="nav-link" th:classappend="${iterStat.first ? 'active' : ''}" data-toggle="tab" th:href="'#tab-' + ${iterStat.index}"><span th:text="${day.getDatetimeDay()}"></span></a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div th:each="day, iterStat : ${days}" class="tab-pane" th:classappend="${iterStat.first ? 'active' : ''}" th:id="'tab-' + ${iterStat.index}">
+            <div th:each="hour : ${day.getHours()}">
+                <h4>Time: <span th:text="${hour.datetime}"></span></h4>
+                <p>Temp: <span th:text="${hour.temp}"></span></p>
+                <p>Precipitation: <span th:text="${hour.precipType != null ? hour.precipType : 'No'}"></span></p>
+                <p>Speed of wind: <span th:text="${hour.windspeed}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

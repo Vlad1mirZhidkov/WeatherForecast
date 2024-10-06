@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<form action="#" th:action="@{/weather}" method="get">
+    <label for="mail">Enter your email:</label><br>
+    <input type="text" id="mail" name="mail" required><br>
+    <label for="password">Enter your password:</label><br>
+    <input type="text" id="password" name="password" required><br>
+    <input type="submit" value="Register" formaction="/register">
+</form>
+</body>
+</html>

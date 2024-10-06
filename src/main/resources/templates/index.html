@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Weather Forecast</title>
+</head>
+<body>
+<h1>Welcome to the home page!</h1>
+
+<form action="#" th:action="@{/weather}" method="get">
+    <label for="location">Enter a city or country:</label><br>
+    <input type="text" id="location" name="location" required><br>
+    <input type="submit" value="Get Current Weather" formaction="/currentWeather">
+    <input type="submit" value="Get 15 Days Forecast" formaction="/forecast">
+</form>
+
+<p>Click <a href="/register">here</a> to register</p>
+<p>Click <a href="/authorize">here</a> to authorize</p>
+</body>
+</html>
