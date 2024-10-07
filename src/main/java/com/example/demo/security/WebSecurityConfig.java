@@ -38,11 +38,9 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 // Разрешает доступ без аутентификации
-                .requestMatchers("/api/auth/**",
-                        "/swagger-ui/**", "/v3/api-docs/**", "/docs/**").permitAll()
+                .requestMatchers("/", "/register", "login").permitAll()
                 // Доступ определенным ролям
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 // Все остальные требуют аутентификации
                 .anyRequest().authenticated()
                 .and()
