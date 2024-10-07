@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.WeatherData;
+import com.example.demo.DTO.WeatherData;
+import com.example.demo.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ public class WeatherController {
     @Autowired
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
+
     }
 
     @GetMapping
@@ -40,7 +42,12 @@ public class WeatherController {
     }
 
     @GetMapping("/register")
-    public String getRegister(Model model){
+    public String getRegister(){
         return "reg";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(){
+        return "login";
     }
 }

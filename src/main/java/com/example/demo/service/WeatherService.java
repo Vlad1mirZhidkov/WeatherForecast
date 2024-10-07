@@ -1,6 +1,6 @@
-package com.example.demo.controller;
+package com.example.demo.service;
 
-import com.example.demo.model.WeatherData;
+import com.example.demo.DTO.WeatherData;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;

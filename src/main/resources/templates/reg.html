@@ -5,12 +5,41 @@
     <title>Registration</title>
 </head>
 <body>
-<form action="#" th:action="@{/weather}" method="get">
-    <label for="mail">Enter your email:</label><br>
-    <input type="text" id="mail" name="mail" required><br>
+<form id="registrationForm">
+    <label for="username">Enter your username:</label><br>
+    <input type="text" id="username" name="username" required><br>
     <label for="password">Enter your password:</label><br>
-    <input type="text" id="password" name="password" required><br>
-    <input type="submit" value="Register" formaction="/register">
+    <input type="password" id="password" name="password" required><br>
+    <input type="submit" value="Register">
 </form>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+        };
+
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirectUrl) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    console.error('Ошибка: Не удалось получить URL для редиректа');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+</script>
 </body>
 </html>
