@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.AuthResponse;
 import com.example.demo.DTO.RegisterUserRequest;
 import com.example.demo.DTO.WeatherUserDTO;
+import com.example.demo.Role;
 import com.example.demo.model.UserEntity;
 import com.example.demo.model.WeatherUser;
 import com.example.demo.repository.UserRepository;
@@ -14,6 +16,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +39,8 @@ public class RegistrationController {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final JwtGenerator jwtGenerator;
+    private final JwtGenerator tokenGenerator;
+    private final UserDetailsService userDetailsService;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerUser(@RequestBody RegisterUserRequest request){
@@ -42,6 +50,7 @@ public class RegistrationController {
         UserEntity user = UserEntity.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.USER)
                 .build();
         userRepository.save(user);
 
@@ -50,12 +59,20 @@ public class RegistrationController {
         Map<String, Object> response = new HashMap<>();
         response.put("redirectUrl", "/login");
         response.put("weatherUserDTO", weatherUserDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/login")
-    public String getLogin(Model model){
+    public ResponseEntity<Map<String, Object>> getLogin(@RequestBody RegisterUserRequest request){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = tokenGenerator.generateToken(authentication);
+        AuthResponse authResponse = new AuthResponse(token);
 
-        return "redirect:/";
+        Map<String, Object> response = new HashMap<>();
+        response.put("redirectUrl", "/");
+        response.put("authResponse", authResponse);
+        log.info("{} is logged", request.getUsername());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

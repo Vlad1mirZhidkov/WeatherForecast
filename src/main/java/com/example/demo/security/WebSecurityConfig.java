@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +39,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 // Разрешает доступ без аутентификации
-                .requestMatchers("/", "/register", "login").permitAll()
+                .requestMatchers("/", "/register", "/login", "/forecast").permitAll()
                 // Доступ определенным ролям
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // Все остальные требуют аутентификации
@@ -52,8 +53,12 @@ public class WebSecurityConfig {
 
     // Возрвращает AuthenticationManager для аутентификации
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder())
+                .and()
+                .build();
     }
 
     // Возвращает BCryptPasswordEncoder для хеширования паролей

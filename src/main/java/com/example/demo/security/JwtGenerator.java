@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 import static com.example.demo.security.SecurityConstants.JWT_EXPIRATION;
 
+@Slf4j
 @Component
 public class JwtGenerator {
 
