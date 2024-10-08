@@ -35,8 +35,7 @@ public class RegistrationController {
     private final JwtGenerator jwtGenerator;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> registerUser(@RequestBody RegisterUserRequest request){
-        System.out.println("Пииииво)");
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody RegisterUserRequest request){
         if (Boolean.TRUE.equals(userRepository.existsByUsername(request.getUsername()))) {
             throw new IllegalArgumentException("User with login " + request.getUsername() + " already exists.");
         }
@@ -44,15 +43,13 @@ public class RegistrationController {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
-
-        System.out.println(request.getUsername());
-        System.out.println(request.getPassword());
         userRepository.save(user);
 
         WeatherUserDTO weatherUserDTO = MappingUtils.mapToWeatherUserDTO(weatherUserService.registerUser(request));
 
-        Map<String, String> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         response.put("redirectUrl", "/login");
+        response.put("weatherUserDTO", weatherUserDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

@@ -24,7 +24,6 @@ public class WeatherUserService {
 
         WeatherUser newUser = WeatherUser.builder()
                 .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
                 .build();
         weatherUserRepository.save(newUser);
         log.info("User with id {} saved", newUser.getId());

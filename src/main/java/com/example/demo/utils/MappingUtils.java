@@ -12,7 +12,6 @@ public class MappingUtils {
                     .id(user.getId())
                     .fullName(user.getFullName())
                     .username(user.getUsername())
-                    .password(user.getPassword())
                     .phone(user.getPhone())
                     .email(user.getEmail())
                     .city(user.getCity())
