@@ -26,7 +26,8 @@ public class WeatherController {
     }
 
     @GetMapping("/currentWeather")
-    public String getCurrentWeather(Model model, @RequestParam("location") String location){
+    public String getCurrentWeather(Model model, @RequestParam("location") String location) {
+        System.out.println("Received location: " + location); // Для отладки
         WeatherData weatherData = weatherService.getWeatherData(location).block();
         WeatherData.CurrentTime currentTime = weatherData.getCurrentTime();
         model.addAttribute("currentTime", currentTime);

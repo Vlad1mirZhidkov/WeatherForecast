@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 // Разрешает доступ без аутентификации
-                .requestMatchers("/", "/register", "/login", "/forecast").permitAll()
+                .requestMatchers("/", "/register", "/login").permitAll()
                 // Доступ определенным ролям
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 // Все остальные требуют аутентификации
