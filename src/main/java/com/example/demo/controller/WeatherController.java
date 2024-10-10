@@ -47,14 +47,4 @@ public class WeatherController {
         model.addAttribute("location", location);
         return "forecast";
     }
-
-    @GetMapping("/register")
-    public String getRegister(){
-        return "reg";
-    }
-
-    @GetMapping("/login")
-    public String getLogin(){
-        return "login";
-    }
 }

@@ -23,9 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -34,13 +32,13 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/auth")
 public class RegistrationController {
     private final WeatherUserService weatherUserService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtGenerator tokenGenerator;
-    private final UserDetailsService userDetailsService;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> registerUser(@RequestBody RegisterUserRequest request){
@@ -74,5 +72,15 @@ public class RegistrationController {
         response.put("authResponse", authResponse);
         log.info("{} is logged", request.getUsername());
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/register")
+    public String getRegister(){
+        return "reg";
+    }
+
+    @GetMapping("/login")
+    public String getLogin(){
+        return "login";
     }
 }
