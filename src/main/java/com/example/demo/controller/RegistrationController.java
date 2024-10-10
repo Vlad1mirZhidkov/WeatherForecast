@@ -83,4 +83,12 @@ public class RegistrationController {
     public String getLogin(){
         return "login";
     }
+
+    @GetMapping("/logout")
+    public ResponseEntity<Map<String, Object>> logout() {
+        SecurityContextHolder.clearContext();
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Successfully logged out");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

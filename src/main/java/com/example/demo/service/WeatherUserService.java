@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeatherUserService {
     private final WeatherUserRepository weatherUserRepository;
-    private final PasswordEncoder passwordEncoder;
 
     public WeatherUser registerUser(RegisterUserRequest request){
         weatherUserRepository.findByUsername(request.getUsername())
@@ -28,6 +27,11 @@ public class WeatherUserService {
         weatherUserRepository.save(newUser);
         log.info("User with id {} saved", newUser.getId());
         return newUser;
+    }
+
+    public WeatherUser getUserByUsername(String username) {
+        return weatherUserRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User with username " + username + " not found."));
     }
 
     public WeatherUser updateContactInfo(Long userId, UpdateContactInfoRequest request){
@@ -53,5 +57,11 @@ public class WeatherUserService {
         }
         weatherUserRepository.save(user);
         return user;
+    }
+
+    public void deleteUser(Long userId){
+        WeatherUser user = weatherUserRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " not found."));
+        weatherUserRepository.delete(user);
     }
 }
