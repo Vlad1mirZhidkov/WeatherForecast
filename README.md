@@ -33,8 +33,15 @@ Weather Application is a Spring Boot-based application that provides weather inf
     ```sh
     mvn clean install
     ```
+    
+3. Configure your PostgreSQL database detailes according to the src/main/resources/application.properties file.
+   ```sh
+   spring.datasource.url=jdbc:postgresql://localhost:5432/bank
+   spring.datasource.username=postgres
+   spring.datasource.password=postgres
+   ```
 
-3. Run the application:
+5. Run the application:
     ```sh
     mvn spring-boot:run
     ```
@@ -47,29 +54,3 @@ Weather Application is a Spring Boot-based application that provides weather inf
   - `model` - data entities
   - `DTO` - data transfer objects
   - `security` - project security
-
-## API Usage Examples
-### Get Weather Data
-- **URL:** `/weather/{location}`
-- **Method:** `GET`
-- **URL Parameters:**
-  - `location` - location (e.g., "London")
-- **Request Example:**
-    ```sh
-    curl -X GET "http://localhost:8080/weather/London"
-    ```
-
-### Register User
-- **URL:** `/users/register`
-- **Method:** `POST`
-- **Request Body:**
-    ```json
-    {
-      "username": "exampleUser",
-      "password": "examplePassword"
-    }
-    ```
-- **Request Example:**
-    ```sh
-    curl -X POST "http://localhost:8080/users/register" -H "Content-Type: application/json" -d '{"username":"exampleUser","password":"examplePassword"}'
-    ```
