@@ -46,6 +46,7 @@ Weather Application is a Spring Boot-based application that provides weather inf
   - `repository` - data access
   - `model` - data entities
   - `DTO` - data transfer objects
+  - `security` - project security
 
 ## API Usage Examples
 ### Get Weather Data
