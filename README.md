@@ -54,3 +54,6 @@ Weather Application is a Spring Boot-based application that provides weather inf
   - `model` - data entities
   - `DTO` - data transfer objects
   - `security` - project security
+
+## API Documentation
+The API documentation available in swagger.yaml by path src/main/java/resources/templates/docs/swagger.yaml
